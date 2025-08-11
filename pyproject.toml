@@ -1,0 +1,28 @@
+[project]
+name = "vexel"
+version = "0.1.0"
+description = "An application for assisting Google Cluod Sales"
+authors = [{ name = "Ryan McGuinness", email = "rmcguinness@google.com" }]
+requires-python = ">=3.12"
+readme = "README.md"
+dependencies = [
+    "google-cloud-logging (>=3.12.1,<4.0.0)",
+    "google-cloud-trace (>=1.16.2,<2.0.0)",
+    "google-adk (>=1.7.0,<2.0.0)",
+    "google-auth-oauthlib>=1.2.2",
+    "google-cloud-bigquery[pandas]>=3.35.0",
+    "google-cloud-bigquery-storage>=2.32.0",
+    "tabulate>=0.9.0",
+    "uuid>=1.30",
+    "matplotlib>=3.10.3",
+]
+
+[virtualenvs]
+in-project = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["vexel"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
