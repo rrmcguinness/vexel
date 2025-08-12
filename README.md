@@ -8,7 +8,7 @@ This repository contains the backend services and the frontend application for V
 
 The project is organized as a monorepo with two main parts:
 
--   **`/` (Backend):** The core backend is a Python application built using Poetry. It contains various agents (`calendar_agent`, `charts_agent`, etc.) that handle specific business logic and integrations with Google Cloud services.
+-   **`/` (Backend):** The core backend is a Python application built using uv. It contains various agents (`calendar_agent`, `charts_agent`, etc.) that handle specific business logic and integrations with Google Cloud services.
 -   **`vexel-app/` (Frontend):** The frontend is a Next.js application built with pnpm. It provides the user interface for interacting with the Vexel agents and services.
 
 ## Getting Started
@@ -20,21 +20,42 @@ Follow these instructions to set up your local development environment.
 Before you begin, ensure you have the following installed:
 
 -   **Python:** `v3.12` or higher
--   **Poetry:** For managing Python dependencies.
 -   **Node.js:** `v20` or higher
--   **pnpm:** For managing JavaScript dependencies.
+
+### Environment Setup
+
+1.  **Install `pipx`**
+    `pipx` is used to install and run Python applications in isolated environments.
+    ```bash
+    python3 -m pip install --user pipx
+    python3 -m pipx ensurepath
+    ```
+    *(You may need to restart your terminal after installing `pipx` for the changes to take effect.)*
+
+2.  **Install `uv`**
+    `uv` is an extremely fast Python package installer and resolver.
+    ```bash
+    pipx install uv
+    ```
+
+3.  **Install `pnpm`**
+    `pnpm` is a fast, disk space-efficient package manager for JavaScript.
+    ```bash
+    npm install -g pnpm
+    ```
 
 ### Backend Setup
 
-1.  **Install Python Dependencies:**
+1.  **Create and Activate a Virtual Environment:**
     From the root directory of the project, run:
     ```bash
-    poetry install
+    python3 -m venv .venv
+    source .venv/bin/activate
     ```
 
-2.  **Activate the Virtual Environment:**
+2.  **Install Python Dependencies:**
     ```bash
-    poetry shell
+    uv pip install -e .
     ```
 
 ### Frontend Setup
@@ -54,6 +75,23 @@ Before you begin, ensure you have the following installed:
     pnpm dev
     ```
     The application will be available at [http://localhost:3000](http://localhost:3000).
+
+### ADK Setup
+
+1.  **Install the ADK CLI:**
+    ```bash
+    npm i -g @google/generative-ai-adk
+    ```
+
+2.  **Login to Google Cloud:**
+    ```bash
+    gcloud auth application-default login
+    ```
+
+3.  **Enable the Gemini API:**
+    ```bash
+    gcloud services enable aiplatform.googleapis.com
+    ```
 
 ## Configuration
 
