@@ -60,6 +60,8 @@ Before you begin, ensure you have the following installed:
 
 ### Frontend Setup
 
+> Still under development
+
 1.  **Navigate to the Frontend Directory:**
     ```bash
     cd vexel-app
@@ -77,6 +79,8 @@ Before you begin, ensure you have the following installed:
     The application will be available at [http://localhost:3000](http://localhost:3000).
 
 ### ADK Setup
+
+Go back to the root directory for the following. 
 
 1.  **Install the ADK CLI:**
     ```bash
