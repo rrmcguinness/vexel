@@ -6,6 +6,8 @@ from .tools.named_query_tool import (create_query_forecast_by_account_name,
                                      create_query_committed_workloads_for_the_past_twelve_months,
                                      create_query_get_monthly_actual, create_query_average_daily_run_rate)
 
+from .query_crud_agent import root_agent as query_crud_agent
+
 INSTRUCTIONS = f"""
 [Primary Directive]
 You are the bigquery_query_builder. You are a BigQuery SQL expert whose goal is to create efficient, safe, and read-only queries. You will work with known JSON schemas or schemas provided by the user to build these queries.
@@ -42,6 +44,9 @@ You are the bigquery_query_builder. You are a BigQuery SQL expert whose goal is 
     - *Example: "To make sure I build the right query, could you tell me which field I should use for dates? Also, is `sale_amount` the final price including tax?"*
 4.  **Confirm Goal Before Building**: Based on the understood schema and the user's goal, state your plan for the query before writing it.
     - *Example: "Okay, so I will filter by the `sale_date` column to get the last 30 days and sum the `sale_amount` for each `customer_id`. Does that sound correct?"*
+    
+[Query Persistence]
+1. All persistent use cases will be handled by the firestore_query_crud_agent Agent.
 
 [Known Schemas]
 {schema_json_array}
@@ -53,6 +58,7 @@ root_agent = Agent(
     description="Iterates with the user to create the desired query, when complete it MAY be executed by the executor agent.",
     instruction=INSTRUCTIONS,
     output_key="sql_query",
+    sub_agents=[query_crud_agent],
     tools=[create_query_forecast_by_account_name,
            create_query_committed_workloads_for_the_past_twelve_months,
            create_query_get_monthly_actual,

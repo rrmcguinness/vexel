@@ -4,7 +4,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from ..utils.client import ConcordClient
+from ..utils.client import get_bq_client
 
 
 class SchemaMeta(BaseModel):
@@ -17,7 +17,7 @@ class SchemaMeta(BaseModel):
 
 def get_bigquery_table_schema(table_ref: str) -> str:
     """Retrieves the schema of a BigQuery table as a dictionary."""
-    table = ConcordClient().client.get_table(table_ref)
+    table = get_bq_client().get_table(table_ref)
     schema_map = [field.to_api_repr() for field in table.schema]
     print(schema_map)
     return SchemaMeta(display_name=table.friendly_name,

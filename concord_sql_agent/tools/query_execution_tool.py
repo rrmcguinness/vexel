@@ -1,9 +1,7 @@
 import pandas as pd
 from google.api_core.exceptions import GoogleAPIError
 
-from google.cloud.exceptions import GoogleCloudError # You might need to import this based on your client library version
-
-from ..utils.client import ConcordClient
+from ..utils.client import get_bq_client
 
 # Set the global float format for MD output
 pd.options.display.float_format = '{:,.2f}'.format
@@ -20,7 +18,7 @@ def execute_query(query: str) -> str:
         A markdown formatted table of the data requested.
     """
     try:
-        client = ConcordClient().client
+        client = get_bq_client()
         query_job = client.query(query, timeout=timeout_seconds)
         rows = query_job.result()
         df = rows.to_dataframe()

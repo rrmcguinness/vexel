@@ -129,3 +129,31 @@ REDIRECT_URI="http://localhost:3000/api/auth/callback"
 # A secret string for signing session cookies.
 SESSION_SECRET="generate-a-strong-random-secret"
 ```
+
+```mermaid
+graph TD
+    A[👤 User] --> B[Pulse Web Application UI];
+    B -- HTTPS Request --> C{OrchestratorAgent 🚀 on Cloud Run};
+    
+    subgraph "Agent Reasoning & Delegation"
+        C -- "1. Understands intent" --> D[🧠 Gemini API];
+        C -- "2. Delegates task to Sub-Agent" --> E((SessionManagerAgent));
+        C -- "2. Delegates task to Sub-Agent" --> F((DataAnalysisAgent));
+        C -- "2. Delegates task to Sub-Agent" --> G((RAGAgent));
+    end
+    
+    subgraph "Backend Services & Data"
+      E -- "API Call" --> H[Pulse Application API];
+      H --> I[(Pulse Production DB)];
+      F -- "Semantic Search" --> J[📊 Vertex AI Vector Search];
+      J --> I;
+      G -- "Retrieves" --> K[RAG Data Sources];
+    end
+
+    subgraph "Response Flow"
+        H -- "Result" --> C;
+        J -- "Result" --> C;
+        K -- "Result" --> C;
+        C -- "3. Sends Final Response" --> B;
+    end
+   ```
